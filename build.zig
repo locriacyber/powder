@@ -44,6 +44,7 @@ fn buildPowder(b: *Builder, target: CrossTarget, mode: ReleaseMode) *LibExeObjSt
     exe.setTarget(target);
     exe.setBuildMode(mode);
     exe.linkLibCpp();
+    exe.addIncludeDir("."); // for room/*.h and gfx/*.h
     exe.addCSourceFiles(&.{
         "src/action.cpp",
         "src/ai.cpp",
@@ -63,7 +64,6 @@ fn buildPowder(b: *Builder, target: CrossTarget, mode: ReleaseMode) *LibExeObjSt
         "src/input.cpp",
         "src/intrinsic.cpp",
         "src/item.cpp",
-        "src/main.cpp",
         "src/map.cpp",
         "src/mobref.cpp",
         "src/msg.cpp",
@@ -75,11 +75,16 @@ fn buildPowder(b: *Builder, target: CrossTarget, mode: ReleaseMode) *LibExeObjSt
         "src/speed.cpp",
         "src/sramstream.cpp",
         "src/stylus.cpp",
-        // "src/thread.cpp",
         "src/victory.cpp",
     }, &.{});
-    exe.addIncludeDir(".");
+    // support libraries
+    // TODO vender SDL
+    exe.addIncludeDir("/usr/include"); // for SDL.h
+    exe.linkSystemLibrary("SDL");
     exe.addIncludeDir("port/sdl");
+    exe.addCSourceFiles(&.{
+        "port/sdl/hamfake.cpp",
+    }, &.{});
     exe.install();
     return exe;
 }

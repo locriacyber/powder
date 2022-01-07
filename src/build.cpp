@@ -1155,7 +1155,7 @@ MAP::buildRandomRoom(ROOM &room)
 void
 MAP::buildRandomRoomFromDefinition(ROOM &room, const ROOM_DEF *def)
 {
-    UT_ASSERT((int)def);
+    UT_ASSERT((def != 0));
     if (!def)
     {
 	buildRandomRoom(room);

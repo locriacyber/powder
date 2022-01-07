@@ -20,7 +20,6 @@
 #include <ctype.h>
 #include <stdio.h>
 #include <stdlib.h>
-#include <string.h>
 #include "victory.h"
 #include "msg.h"
 #include "item.h"
@@ -154,6 +153,22 @@ glbShowIntrinsic(MOB *mob)
     {
 	gfx_cleartextline(j);
     }
+}
+
+char stricmp_lowerone( const char c ) {
+    if (c <= 'Z' && c >= 'A') return c - ('A' - 'a');
+    return c;
+}
+
+int stricmp ( const char * str1, const char * str2 ) {
+    size_t i = 0;
+    while (str1[i] != 0 && str2[i] != 0) {
+        if (str1[i] != str2[i]) break;
+        ++i;
+    }
+    char c1 = stricmp_lowerone(str1[i]);
+    char c2 = stricmp_lowerone(str2[i]);
+    return c1 - c2;
 }
 
 static int
