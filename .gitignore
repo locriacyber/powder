@@ -1,11 +1,4 @@
 *.ii
 *.s
-credits.cpp
-encyclopedia.cpp
-encyclopedia.h
-glbdef.cpp
-glbdef.h
-license.cpp
-powder.elf
-powder.gba
-powder.sav
+zig-cache/
+zig-out/
