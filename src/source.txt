@@ -13400,13 +13400,13 @@ BRANCH NONE
 
 BRANCH MAIN
 {
-    symbol	'\\207'
+    symbol	0207
     welcome	"%U <return> to the main dungeon."
 }
 
 BRANCH TRIDUDE
 {
-    symbol	'\\211'
+    symbol	0211
     welcome	"%U <enter> a cave made of metal."
 }
 

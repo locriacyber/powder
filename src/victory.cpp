@@ -20,6 +20,7 @@
 #include <ctype.h>
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 #include "victory.h"
 #include "msg.h"
 #include "item.h"

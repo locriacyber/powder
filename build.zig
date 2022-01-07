@@ -1,11 +1,13 @@
 const std = @import("std");
-const builtin = @import("builtin");
-const Builder = std.build.Builder;
-const LibExeObjStep = std.build.LibExeObjStep;
+const buildtools = @import("buildtools.zig");
+
 const CrossTarget = std.zig.CrossTarget;
 const ReleaseMode = std.builtin.Mode;
+const Builder = std.build.Builder;
 const Step = std.build.Step;
 const RunStep = std.build.RunStep;
+const LibExeObjStep = std.build.LibExeObjStep;
+const FileSource = std.build.FileSource;
 
 pub fn build(b: *Builder) void {
     // Standard target options allows the person running `zig build` to choose
@@ -16,37 +18,15 @@ pub fn build(b: *Builder) void {
     // target platform of Powder, set with -target arch-os-abi
     const target = b.standardTargetOptions(.{});
 
-    // target platform of intermediate build tools, which is always native
-    const nativeTarget = CrossTarget.fromTarget(builtin.target);
-
     // Standard release options allow the person running `zig build` to select
     // between Debug, ReleaseSafe, ReleaseFast, and ReleaseSmall.
     const mode = b.standardReleaseOptions();
 
-    // build enummaker    
-    const enummaker = buildSupportScript(b, "support/enummaker/enummaker.cpp", nativeTarget, mode);
-    registerCommand(b, enummaker, "enummaker", "Run enummaker");
-    
-    // Build glbdef.h and glbdef.cpp
-    const generate_glbdef = run(b, enummaker, &.{"source.txt"});
-    generate_glbdef.cwd = "src";
-
-    const encyclopedia2c = buildSupportScript(b, "support/encyclopedia2c/encyclopedia2c.cpp", nativeTarget, mode);
-    registerCommand(b, encyclopedia2c, "encyclopedia2c", "Run encyclopedia2c");
-
-    const generate_encyclopedia = run(b, enummaker, &.{"encyclopedia.txt"});
-    generate_encyclopedia.cwd = "src";
-
-    // TODO add those build tools
-    // powder.step.dependOn(&generate_all_bitmaps.step);
-    // powder.step.dependOn(&generate_allrooms.step);
-
     const powder = buildPowder(b, target, mode);
-    powder.step.dependOn(&generate_glbdef.step);
-    // TODO blocked by zig compiler regression
-    // powder.step.dependOn(&generate_encyclopedia.step);
-
-    // const powder = buildPowder(b);
+    for (buildtools.allBuildTools) |tool| {
+        const result = buildAndRunToolStep(b, tool);
+        powder.step.dependOn(&result.runStep.step);
+    }
     
     registerCommand(b, powder, "run", "Run Powder");
 
@@ -104,19 +84,31 @@ fn buildPowder(b: *Builder, target: CrossTarget, mode: ReleaseMode) *LibExeObjSt
     return exe;
 }
 
-fn buildSupportScript(b: *Builder, comptime entry: []const u8, target: CrossTarget, mode: ReleaseMode) *LibExeObjStep {
-    const exe = b.addExecutable("enummaker", entry);
-    exe.setTarget(target);
-    exe.setBuildMode(mode);
-    exe.linkLibCpp();
-    return exe;
-}
-
 fn run(b: *Builder, exe: *LibExeObjStep, args: []const []const u8) *RunStep {
     const run_cmd = exe.run();
     run_cmd.addArgs(args);
     _ = b;
     return run_cmd;
+}
+
+// returns a Step of running a certain build tool with given arguments
+fn buildAndRunToolStep(b: *Builder, tool: buildtools.SimpleBuildTool) struct {
+    exe: *LibExeObjStep,
+    runStep: *RunStep,
+} {
+    const exe = b.addExecutable(tool.name, tool.entry);
+    exe.setTarget(tool.target);
+    exe.setBuildMode(tool.mode);
+    exe.linkLibCpp();
+    
+    registerCommand(b, exe, tool.name, "Run " ++ tool.name);
+        
+    const generateFileStep = run(b, exe, tool.args);
+    generateFileStep.cwd = tool.cwd;
+    return .{
+        .exe = exe,
+        .runStep = generateFileStep,
+    };
 }
 
 // Register executable so it can be ran with `zig build <cmdName>`
