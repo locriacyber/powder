@@ -41,15 +41,15 @@ using namespace std;
 #include "SDL.h"
 #endif
 
-#include "../../gfxengine.h"
-#include "../../bmp.h"
-#include "../../assert.h"
-#include "../../buf.h"
+#include "../../src/gfxengine.h"
+#include "../../src/bmp.h"
+#include "../../src/assert.h"
+#include "../../src/buf.h"
 
 #include "../../gfx/icon_sdl.bmp.c"
 
 #ifdef USE_VIRTUAL_SCREEN
-#include "../../queue.h"
+#include "../../src/queue.h"
 #endif
 
 #define SRAMSIZE 65536

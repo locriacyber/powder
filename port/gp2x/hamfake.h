@@ -16,7 +16,7 @@
 #define __hamfake__
 
 #include "SDL.h"
-#include "../../control.h"
+#include "../../src/control.h"
 
 // These are the native res of the SDL screen.
 // measured in tiles.

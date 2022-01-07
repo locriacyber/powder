@@ -31,10 +31,10 @@ using namespace std;
 #include "hamfake.h"
 #include "SDL.h"
 
-#include "../../gfxengine.h"
-#include "../../bmp.h"
-#include "../../assert.h"
-#include "../../control.h"
+#include "../../src/gfxengine.h"
+#include "../../src/bmp.h"
+#include "../../src/assert.h"
+#include "../../src/control.h"
 
 //#include "../../gfx/icon_sdl.bmp.c"
 

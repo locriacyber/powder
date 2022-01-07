@@ -15,10 +15,10 @@
  */
 
 #include "mygba.h"
-#include "../../glbdef.h"
-#include "../../encyclopedia.h"
-#include "../../buf.h"
-#include "../../gfx/all_bitmaps.h"
+#include "../../src/glbdef.h"
+#include "../../src/encyclopedia.h"
+#include "../../src/buf.h"
+#include "../../src/gfx/all_bitmaps.h"
 
 #include <stdio.h>
 #include <stdlib.h>

@@ -321,59 +321,59 @@
 			UniqueIdentifier="{93995380-89BD-4b04-88EB-625FBE52EBFB}"
 			>
 			<File
-				RelativePath="..\..\gfx\all_bitmaps.h"
+				RelativePath="..\..\src\gfx\all_bitmaps.h"
 				>
 			</File>
 			<File
-				RelativePath="..\..\rooms\allrooms.h"
+				RelativePath="..\..\src\rooms\allrooms.h"
 				>
 			</File>
 			<File
-				RelativePath="..\..\artifact.h"
+				RelativePath="..\..\src\artifact.h"
 				>
 			</File>
 			<File
-				RelativePath="..\..\assert.h"
+				RelativePath="..\..\src\assert.h"
 				>
 			</File>
 			<File
-				RelativePath="..\..\bmp.h"
+				RelativePath="..\..\src\bmp.h"
 				>
 			</File>
 			<File
-				RelativePath="..\..\buf.h"
+				RelativePath="..\..\src\buf.h"
 				>
 			</File>
 			<File
-				RelativePath="..\..\control.h"
+				RelativePath="..\..\src\control.h"
 				>
 			</File>
 			<File
-				RelativePath="..\..\creature.h"
+				RelativePath="..\..\src\creature.h"
 				>
 			</File>
 			<File
-				RelativePath="..\..\dpdf_table.h"
+				RelativePath="..\..\src\dpdf_table.h"
 				>
 			</File>
 			<File
-				RelativePath="..\..\encyc_support.h"
+				RelativePath="..\..\src\encyc_support.h"
 				>
 			</File>
 			<File
-				RelativePath="..\..\encyclopedia.h"
+				RelativePath="..\..\src\encyclopedia.h"
 				>
 			</File>
 			<File
-				RelativePath="..\..\gfxengine.h"
+				RelativePath="..\..\src\gfxengine.h"
 				>
 			</File>
 			<File
-				RelativePath="..\..\glbdef.h"
+				RelativePath="..\..\src\glbdef.h"
 				>
 			</File>
 			<File
-				RelativePath="..\..\grammar.h"
+				RelativePath="..\..\src\grammar.h"
 				>
 			</File>
 			<File
@@ -381,35 +381,35 @@
 				>
 			</File>
 			<File
-				RelativePath="..\..\hiscore.h"
+				RelativePath="..\..\src\hiscore.h"
 				>
 			</File>
 			<File
-				RelativePath="..\..\input.h"
+				RelativePath="..\..\src\input.h"
 				>
 			</File>
 			<File
-				RelativePath="..\..\intrinsic.h"
+				RelativePath="..\..\src\intrinsic.h"
 				>
 			</File>
 			<File
-				RelativePath="..\..\item.h"
+				RelativePath="..\..\src\item.h"
 				>
 			</File>
 			<File
-				RelativePath="..\..\itemstack.h"
+				RelativePath="..\..\src\itemstack.h"
 				>
 			</File>
 			<File
-				RelativePath="..\..\map.h"
+				RelativePath="..\..\src\map.h"
 				>
 			</File>
 			<File
-				RelativePath="..\..\mobref.h"
+				RelativePath="..\..\src\mobref.h"
 				>
 			</File>
 			<File
-				RelativePath="..\..\msg.h"
+				RelativePath="..\..\src\msg.h"
 				>
 			</File>
 			<File
@@ -417,39 +417,39 @@
 				>
 			</File>
 			<File
-				RelativePath="..\..\name.h"
+				RelativePath="..\..\src\name.h"
 				>
 			</File>
 			<File
-				RelativePath="..\..\piety.h"
+				RelativePath="..\..\src\piety.h"
 				>
 			</File>
 			<File
-				RelativePath="..\..\rand.h"
+				RelativePath="..\..\src\rand.h"
 				>
 			</File>
 			<File
-				RelativePath="..\..\signpost.h"
+				RelativePath="..\..\src\signpost.h"
 				>
 			</File>
 			<File
-				RelativePath="..\..\smokestack.h"
+				RelativePath="..\..\src\smokestack.h"
 				>
 			</File>
 			<File
-				RelativePath="..\..\speed.h"
+				RelativePath="..\..\src\speed.h"
 				>
 			</File>
 			<File
-				RelativePath="..\..\sramstream.h"
+				RelativePath="..\..\src\sramstream.h"
 				>
 			</File>
 			<File
-				RelativePath="..\..\stylus.h"
+				RelativePath="..\..\src\stylus.h"
 				>
 			</File>
 			<File
-				RelativePath="..\..\victory.h"
+				RelativePath="..\..\src\victory.h"
 				>
 			</File>
 		</Filter>

@@ -5,14 +5,14 @@ del ..\..\gfx\slug_and_blood.bmp.c
 del ..\..\gfx\slug_and_blood_hires.bmp.c
 del ..\..\gfx\icon_sdl.bmp.c
 
-del ..\..\encyclopedia.h
+del ..\..\src\encyclopedia.h
 del ..\..\encyclopedia.cpp
 
-del ..\..\glbdef.h
+del ..\..\src\glbdef.h
 del ..\..\glbdef.cpp
 
 del ..\..\rooms\*.cpp
-del ..\..\rooms\*.h
+del ..\..\src\rooms\*.h
 
 del ..\..\gfx\classic\*.c
 del ..\..\gfx\distorted\*.c

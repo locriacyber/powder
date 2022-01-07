@@ -17,7 +17,7 @@
 
 #include "SDL.h"
 
-#include "../../control.h"
+#include "../../src/control.h"
 
 // These are the native res of the SDL screen.
 #define HAM_SCRW		256

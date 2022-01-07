@@ -18,9 +18,9 @@
 #include "mygba.h"
 #include "hamfake.h"
 
-#include "../../gfxengine.h"
-#include "../../bmp.h"
-#include "../../control.h"
+#include "../../src/gfxengine.h"
+#include "../../src/bmp.h"
+#include "../../src/control.h"
 
 #include <nds.h>
 #include <fat.h>

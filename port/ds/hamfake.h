@@ -15,7 +15,7 @@
 #ifndef __hamfake__
 #define __hamfake__
 
-#include "../../control.h"
+#include "../../src/control.h"
 
 //
 // External Hooks
