@@ -8,6 +8,7 @@ Well, I can only guarantee Linux support with my additions.
 
 ## Roadmap
 
+- [ ] Fix dependencies on gfx
 - [ ] Build without dependencies (except the Zig compiler)
 - [ ] Rearrange UI and display shortcut near menu items
 - [ ] Load custom fonts and tilesets and add menu to choose between them; also add documentation

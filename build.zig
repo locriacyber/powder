@@ -85,7 +85,7 @@ fn buildPowder(b: *Builder, target: CrossTarget, mode: ReleaseMode) *LibExeObjSt
     }, &.{});
     // support libraries
     // TODO vender SDL
-    exe.addIncludeDir("/usr/include"); // for SDL.h
+    // it is a mystery how this compiler even finds #include "SDL.h" by itself
     exe.linkSystemLibrary("SDL");
     exe.addIncludeDir("port/sdl");
     exe.addCSourceFiles(&.{
