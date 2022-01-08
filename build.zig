@@ -7,9 +7,12 @@ const Builder = std.build.Builder;
 const Step = std.build.Step;
 const RunStep = std.build.RunStep;
 const LibExeObjStep = std.build.LibExeObjStep;
-const FileSource = std.build.FileSource;
 
-pub fn build(b: *Builder) void {
+pub fn build(b: *Builder) !void {
+    // where the build tools and the game will be
+    const installPath = try std.fmt.allocPrint(b.allocator, "{s}/bin", .{b.install_path});
+    b.getInstallStep().dependOn(&b.addLog("Executables will be built at: {s}\n", .{installPath}).step);
+
     // Standard target options allows the person running `zig build` to choose
     // what target to build for. Here we do not override the defaults, which
     // means any target is allowed, and the default is native. Other options
@@ -23,10 +26,8 @@ pub fn build(b: *Builder) void {
     const mode = b.standardReleaseOptions();
 
     const powder = buildPowder(b, target, mode);
-    for (buildtools.allBuildTools) |tool| {
-        const result = buildAndRunToolStep(b, tool);
-        powder.step.dependOn(&result.runStep.step);
-    }
+
+    buildtools.addDependenciesTo(b, installPath, &powder.step);
     
     registerCommand(b, powder, "run", "Run Powder");
 
@@ -43,6 +44,8 @@ fn buildPowder(b: *Builder, target: CrossTarget, mode: ReleaseMode) *LibExeObjSt
     const exe = b.addExecutable("powder", "src/main.cpp");
     exe.setTarget(target);
     exe.setBuildMode(mode);
+    exe.install();
+    
     exe.linkLibCpp();
     exe.addIncludeDir("."); // for room/*.h and gfx/*.h
     exe.addCSourceFiles(&.{
@@ -56,6 +59,7 @@ fn buildPowder(b: *Builder, target: CrossTarget, mode: ReleaseMode) *LibExeObjSt
         "src/control.cpp",
         "src/creature.cpp",
         "src/dpdf_table.cpp",
+        "src/encyclopedia.cpp",
         "src/encyc_support.cpp",
         "src/gfxengine.cpp",
         "src/glbdef.cpp",
@@ -76,6 +80,8 @@ fn buildPowder(b: *Builder, target: CrossTarget, mode: ReleaseMode) *LibExeObjSt
         "src/sramstream.cpp",
         "src/stylus.cpp",
         "src/victory.cpp",
+        "rooms/allrooms.cpp",
+        "gfx/all_bitmaps.cpp",
     }, &.{});
     // support libraries
     // TODO vender SDL
@@ -85,39 +91,19 @@ fn buildPowder(b: *Builder, target: CrossTarget, mode: ReleaseMode) *LibExeObjSt
     exe.addCSourceFiles(&.{
         "port/sdl/hamfake.cpp",
     }, &.{});
-    exe.install();
+
     return exe;
 }
 
-fn run(b: *Builder, exe: *LibExeObjStep, args: []const []const u8) *RunStep {
+pub fn run(b: *Builder, exe: *LibExeObjStep, args: []const []const u8) *RunStep {
     const run_cmd = exe.run();
     run_cmd.addArgs(args);
     _ = b;
     return run_cmd;
 }
 
-// returns a Step of running a certain build tool with given arguments
-fn buildAndRunToolStep(b: *Builder, tool: buildtools.SimpleBuildTool) struct {
-    exe: *LibExeObjStep,
-    runStep: *RunStep,
-} {
-    const exe = b.addExecutable(tool.name, tool.entry);
-    exe.setTarget(tool.target);
-    exe.setBuildMode(tool.mode);
-    exe.linkLibCpp();
-    
-    registerCommand(b, exe, tool.name, "Run " ++ tool.name);
-        
-    const generateFileStep = run(b, exe, tool.args);
-    generateFileStep.cwd = tool.cwd;
-    return .{
-        .exe = exe,
-        .runStep = generateFileStep,
-    };
-}
-
 // Register executable so it can be ran with `zig build <cmdName>`
-fn registerCommand(b: *Builder, exe: *LibExeObjStep, comptime cmdName: []const u8, comptime cmdDesc: []const u8) void {
+pub fn registerCommand(b: *Builder, exe: *LibExeObjStep, cmdName: []const u8, cmdDesc: []const u8) void {
     const run_cmd = run(b, exe, args: {
         if (b.args) |args| break :args args;
         break :args &.{};

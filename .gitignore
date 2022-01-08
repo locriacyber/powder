@@ -2,3 +2,4 @@
 *.s
 zig-cache/
 zig-out/
+powder.sav

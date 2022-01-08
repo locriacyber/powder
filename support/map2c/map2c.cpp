@@ -40,7 +40,7 @@ int glb_allowdig = 1;
 int glb_allowitems = 1;
 int glb_allowtele = 1;
 int glb_x = -1, glb_y = -1;
-char *glb_quest = "-1";
+const char *glb_quest = "-1";
 
 void
 writeList(ostream &os, const char *prefix, const char *listtype, OUT_ENTRY *list)
@@ -290,8 +290,9 @@ main(int argc, char* argv[])
     os << "// DO NOT HAND EDIT" << endl;
     os << "// Generated from " << argv[1] << endl;
     os << endl;
-    os << "#include \"../map.h\"" << endl;
-    os << "#include \"../glbdef.h\"" << endl;
+    // removed, since the header file isn't directly used, and those are included in allrooms.h
+    // os << "#include \"../map.h\"" << endl;
+    // os << "#include \"../glbdef.h\"" << endl;
     os << endl;
 
     // Output out our lookups..
