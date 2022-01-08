@@ -1,3 +1,6 @@
+/// Custom Tools for turning assets in C headers
+/// Not needed for Zig, since it supports embedding binary files directly
+
 const builtin = @import("builtin");
 const std = @import("std");
 const CrossTarget = std.zig.CrossTarget;
@@ -7,8 +10,7 @@ const Step = std.build.Step;
 const RunStep = std.build.RunStep;
 const LibExeObjStep = std.build.LibExeObjStep;
 
-const run = @import("build.zig").run;
-const registerCommand = @import("build.zig").registerCommand;
+const build = @import("../build.zig");
 
 // target platform of intermediate build tools, which is always native
 pub const nativeTarget = CrossTarget.fromTarget(builtin.target);
@@ -113,9 +115,9 @@ fn buildAndRunToolStep(b: *Builder, tool: SimpleBuildTool) BuildToolStep {
     exe.linkLibCpp();
     exe.addCSourceFiles(tool.additional, &.{});
 
-    registerCommand(b, exe, tool.name, std.fmt.allocPrint(b.allocator, "Run {s}", .{tool.name}) catch unreachable);
+    build.registerCommand(b, exe, tool.name, std.fmt.allocPrint(b.allocator, "Run {s}", .{tool.name}) catch unreachable);
         
-    const generateFileStep = run(b, exe, tool.args);
+    const generateFileStep = build.run(b, exe, tool.args);
     generateFileStep.cwd = tool.cwd;
     return BuildToolStep{
         .exe = exe,

@@ -1,5 +1,5 @@
 const std = @import("std");
-const buildtools = @import("buildtools.zig");
+const buildtools = @import("build/tools.zig");
 
 const CrossTarget = std.zig.CrossTarget;
 const ReleaseMode = std.builtin.Mode;
@@ -83,16 +83,34 @@ fn buildPowder(b: *Builder, target: CrossTarget, mode: ReleaseMode) *LibExeObjSt
         "rooms/allrooms.cpp",
         "gfx/all_bitmaps.cpp",
     }, &.{});
-    // support libraries
-    // TODO vender SDL
-    // it is a mystery how this compiler even finds #include "SDL.h" by itself
-    exe.linkSystemLibrary("SDL");
-    exe.addIncludeDir("port/sdl");
-    exe.addCSourceFiles(&.{
-        "port/sdl/hamfake.cpp",
-    }, &.{});
+
+    addHamFake(b, exe, HamBackend.Raylib);
 
     return exe;
+}
+
+const HamBackend = enum {
+    SDL, // SDL 1.2
+    Raylib,
+};
+
+// Add hamfake implementation
+fn addHamFake(b: *Builder, exe: *LibExeObjStep, backend: HamBackend) void {
+    switch (backend) {
+        .SDL => {
+            // TODO vender SDL
+            // it is a mystery how this compiler even finds #include "SDL.h" by itself
+            exe.linkSystemLibrary("SDL");
+            exe.addIncludeDir("port/sdl");
+            exe.addCSourceFiles(&.{
+                "port/sdl/hamfake.cpp",
+            }, &.{});
+        },
+        .Raylib => {
+            exe.linkSystemLibrary("raylib");
+            @import("port/raylib/build.zig").addTo(b, exe);
+        },
+    }
 }
 
 pub fn run(b: *Builder, exe: *LibExeObjStep, args: []const []const u8) *RunStep {

@@ -17,16 +17,7 @@
 #ifndef __sramstream_h__
 #define __sramstream_h__
 
-//
-// Hamfake methods for accessing save data.
-//
-char *hamfake_readLockSRAM();
-void hamfake_readUnlockSRAM(char *);
-
-char *hamfake_writeLockSRAM();
-void hamfake_writeUnlockSRAM(char *);
-
-void hamfake_endWritingSession();
+#include "hamfake.h"
 
 enum COMPRESS_TYPE
 {
